@@ -2,14 +2,23 @@ package se.lexicon.g36todoit.model.dto;
 
 import se.lexicon.g36todoit.model.entity.TodoItem;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
 public class PersonDTO implements Serializable {
 
     private Integer id;
+
+    @NotBlank(message = "This field is mandatory")
+    @Size(min = 2, max = 255, message = "First name need to have at least two letter")
     private String firstName;
+
+    @NotBlank(message = "This field is mandatory")
+    @Size(min = 2, max = 255, message = "Last name need to have at least two letter")
     private String lastName;
+
     private List<TodoItem> assignedTodos;
 
     public PersonDTO() {

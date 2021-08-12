@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Form</title>
+</head>
+<body>
+
+
+        <h2>Please fill in this form</h2>
+        <form action="#" th:action="@{${actionUrl}}" method="post" th:object="${form}">
+
+            <input type="hidden" th:value="${form.id}" th:field="*{id}">
+
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" th:value="${form.firstName}" placeholder="Please enter your first name" th:field="*{firstName}"> <br>
+            <div th:if="${#fields.hasErrors('firstName')}">
+                <ul>
+                    <li>
+                        <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></p>
+                    </li>
+                </ul>
+            </div>
+
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" th:value="${form.lastName}" placeholder="Please enter your last name" th:field="*{lastName}"> <br>
+            <div th:if="${#fields.hasErrors('lastName')}">
+                <ul>
+                    <li>
+                        <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
+                    </li>
+                </ul>
+            </div>
+
+            <input type="submit" value="Submit"> <br>
+        </form>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person View</title>
+</head>
+<body>
+
+    <h2 th:text="${person.firstName + ' ' + person.lastName} + ':'"></h2>
+    <p>First name: <span th:text="${person.firstName}"></span></p>
+    <p>Last name: <span th:text="${person.lastName}"></span></p>
+    <h3>Todo items:</h3>
+    <div th:if="${person.assignedTodos == null or person.assignedTodos.isEmpty()}">
+        <p>No todo items yet</p>
+    </div>
+    <ul th:each="todoItem : ${person.assignedTodos}">
+        <li>
+            <div>
+                <p th:text="${todoItem.title}"></p>
+                <p th:text="${todoItem.description}"></p>
+                <p th:text="${todoItem.deadLine}"></p>
+                <p th:text="${todoItem.done}"></p>
+            </div>
+        </li>
+    </ul>
+
+</body>
+</html>
