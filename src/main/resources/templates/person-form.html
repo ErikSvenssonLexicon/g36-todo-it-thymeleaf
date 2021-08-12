@@ -2,41 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <title>Person Form</title>
 </head>
 <body>
+    <div class="container">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body">
+                <h5 class="card-title">Please fill in this form</h5>
+                <form action="#" th:action="@{${actionUrl}}" method="post" th:object="${form}">
 
+                    <input type="hidden" th:value="${form.id}" th:field="*{id}">
+                    <div class="form-floating mb-3">
+                        <input
+                                class="form-control"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('firstName'))} ? 'is-invalid'"
+                                type="text"
+                                id="firstName"
+                                th:value="${form.firstName}"
+                                placeholder="Please enter your first name"
+                                th:field="*{firstName}"
+                        >
+                        <label for="firstName">First name</label>
+                        <div th:if="${#fields.hasErrors('firstName')}">
+                            <p class="text-danger m-1" th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></p>
+                        </div>
+                    </div>
 
-        <h2>Please fill in this form</h2>
-        <form action="#" th:action="@{${actionUrl}}" method="post" th:object="${form}">
-
-            <input type="hidden" th:value="${form.id}" th:field="*{id}">
-
-            <label for="firstName">First name</label>
-            <input type="text" id="firstName" th:value="${form.firstName}" placeholder="Please enter your first name" th:field="*{firstName}"> <br>
-            <div th:if="${#fields.hasErrors('firstName')}">
-                <ul>
-                    <li>
-                        <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></p>
-                    </li>
-                </ul>
+                    <div class="form-floating mb-3">
+                        <input
+                                class="form-control"
+                                type="text"
+                                id="lastName"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('lastName'))} ? 'is-invalid'"
+                                th:value="${form.lastName}"
+                                placeholder="Please enter your last name"
+                                th:field="*{lastName}"
+                        >
+                        <label for="lastName">Last name</label>
+                        <div th:if="${#fields.hasErrors('lastName')}">
+                            <p class="text-danger m-1" th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                        <input class="btn btn-primary" type="submit" value="Submit"> <br>
+                    </div>
+                </form>
+                <a href="#" class="btn btn-danger">Cancel</a>
             </div>
-
-            <label for="lastName">Last name</label>
-            <input type="text" id="lastName" th:value="${form.lastName}" placeholder="Please enter your last name" th:field="*{lastName}"> <br>
-            <div th:if="${#fields.hasErrors('lastName')}">
-                <ul>
-                    <li>
-                        <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
-                    </li>
-                </ul>
-            </div>
-
-            <input type="submit" value="Submit"> <br>
-        </form>
-
-
-
-
+        </div>
+    </div>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" > </script>
 </body>
 </html>
