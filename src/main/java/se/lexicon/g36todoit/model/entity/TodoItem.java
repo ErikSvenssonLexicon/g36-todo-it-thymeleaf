@@ -20,7 +20,7 @@ public class TodoItem {
     @Column(name = "done")
     private boolean done;
     @ManyToOne(
-            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE},
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "assignee_id")

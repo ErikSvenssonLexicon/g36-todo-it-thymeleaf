@@ -21,4 +21,10 @@ public interface PersonService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     boolean delete(Integer id);
+
+    @Transactional(rollbackFor = RuntimeException.class)
+    Person assignTodoItem(Integer personId, Integer todoItemId);
+
+    @Transactional(rollbackFor = RuntimeException.class)
+    Person removeTodoItem(Integer personId, Integer todoItemId);
 }

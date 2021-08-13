@@ -59,6 +59,7 @@ public class Person {
     }
 
     public List<TodoItem> getAssignedTodos() {
+        if(assignedTodos == null) assignedTodos = new ArrayList<>();
         return assignedTodos;
     }
 
