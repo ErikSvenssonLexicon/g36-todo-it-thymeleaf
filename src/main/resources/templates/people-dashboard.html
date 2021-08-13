@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>People</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body">
+                <h5 class="card-title">Search Result:</h5>
+                <table th:unless="${people.isEmpty()}" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="person,iterator : ${people}">
+                    <tr>
+                        <th class="align-middle" scope="row" th:text="${iterator.count}"></th>
+                        <td class="align-middle"><span th:text="${person.firstName + ' ' + person.lastName}"></span></td>
+                        <td class="align-middle"><a class="btn btn-sm btn-primary" th:href="@{/people/{id} (id = ${person.id})}">Details</a></td>
+                        <td class="align-middle"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" > </script>
+</body>
+</html>

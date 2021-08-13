@@ -1,17 +1,16 @@
 package se.lexicon.g36todoit.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import se.lexicon.g36todoit.dao.PersonDAO;
 import se.lexicon.g36todoit.model.dto.PersonDTO;
 import se.lexicon.g36todoit.model.entity.Person;
 import se.lexicon.g36todoit.service.PersonService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/people")
@@ -21,6 +20,29 @@ public class PersonController {
 
     public PersonController(PersonService personService) {
         this.personService = personService;
+    }
+
+    @GetMapping()
+    public String searchPeople(
+            @RequestParam(name = "type") String type,
+            @RequestParam(name = "value", defaultValue = "") String value,
+            Model model){
+
+        List<Person> people = new ArrayList<>();
+
+        switch (type){
+            case "all":
+                people = personService.findAll();
+                break;
+            case "name":
+                people = personService.findByNameContains(value);
+                break;
+            default:
+                model.addAttribute("error", "Invalid type, valid types are 'all' and 'name'");
+        }
+
+        model.addAttribute("people", people);
+        return "people-dashboard";
     }
 
     @GetMapping("/create")
