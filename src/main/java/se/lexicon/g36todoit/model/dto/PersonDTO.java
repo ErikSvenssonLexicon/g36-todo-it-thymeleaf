@@ -12,11 +12,11 @@ public class PersonDTO implements Serializable {
     private Integer id;
 
     @NotBlank(message = "This field is mandatory")
-    @Size(min = 2, max = 255, message = "First name need to have at least two letter")
+    @Size(min = 2, max = 255, message = "First name need to have at least two letters")
     private String firstName;
 
     @NotBlank(message = "This field is mandatory")
-    @Size(min = 2, max = 255, message = "Last name need to have at least two letter")
+    @Size(min = 2, max = 255, message = "Last name need to have at least two letters")
     private String lastName;
 
     private List<TodoItem> assignedTodos;
