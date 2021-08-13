@@ -10,23 +10,55 @@
     <div class="container">
         <div class="card shadow-sm mt-5">
             <div class="card-body">
+                <div class="card-header">
+
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <h3 class="navbar-brand m-0">People:</h3>
+
+                            <div class="d-flex">
+                                <form th:action="@{/people}" class="d-flex me-2 " method="get">
+                                    <input type="hidden" name="type" value="name">
+                                    <input class="form-control me-2" type="search" name="value" placeholder="Search">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+                                <div>
+                                    <a th:href="@{/people(type=all)}" class="btn btn-success">Find all</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+
+
                 <h5 class="card-title">Search Result:</h5>
+
+                <div th:if="${notFound}" class="alert alert-info alert-dismissible fade show" role="alert">
+                    <p th:text="${notFound}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <p th:text="${error}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
                 <table th:unless="${people.isEmpty()}" class="table table-hover">
                     <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Link</th>
-                        <th scope="col">Action</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First name</th>
+                            <th scope="col">Last name</th>
+                            <th scope="col">Link</th>
+                        </tr>
                     </thead>
-                    <tbody th:each="person,iterator : ${people}">
-                    <tr>
-                        <th class="align-middle" scope="row" th:text="${iterator.count}"></th>
-                        <td class="align-middle"><span th:text="${person.firstName + ' ' + person.lastName}"></span></td>
-                        <td class="align-middle"><a class="btn btn-sm btn-primary" th:href="@{/people/{id} (id = ${person.id})}">Details</a></td>
-                        <td class="align-middle"></td>
-                    </tr>
+                    <tbody>
+                        <tr th:each="person,iterator : ${people}">
+                            <th class="align-middle" scope="row" th:text="${iterator.count}"></th>
+                            <td class="align-middle"><span th:text="${person.firstName}"></span></td>
+                            <td class="align-middle"><span th:text="${person.lastName}"></span></td>
+                            <td class="align-middle"><a class="btn btn-sm btn-primary" th:href="@{/people/{id} (id = ${person.id})}">Details</a></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

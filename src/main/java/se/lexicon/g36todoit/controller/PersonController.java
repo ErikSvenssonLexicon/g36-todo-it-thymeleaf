@@ -41,6 +41,10 @@ public class PersonController {
                 model.addAttribute("error", "Invalid type, valid types are 'all' and 'name'");
         }
 
+        if(people.isEmpty() && type.equals("name")){
+            model.addAttribute("notFound", "No people were found with search: " + value);
+        }
+
         model.addAttribute("people", people);
         return "people-dashboard";
     }
