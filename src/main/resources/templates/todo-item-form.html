@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>TodoItem Form</title>
+</head>
+<body>
+<div class="container">
+    <div class="card shadow-sm mt-5">
+        <div class="card-body">
+            <h5 class="card-title">Please fill in details about Todo Item:</h5>
+            <form th:action="@{${actionUrl}}" method="post" th:object="${form}">
+                <input type="hidden" th:value="${form.id}" th:field="*{id}">
+
+                <div class="form-floating mb-3">
+                    <input
+                            class="form-control"
+                            th:classappend="${not #lists.isEmpty(#fields.errors('title'))} ? 'is-invalid'"
+                            type="text"
+                            id="title"
+                            th:value="${form.title}"
+                            placeholder="Please enter your first name"
+                            th:field="*{title}"
+                    >
+                    <label for="title">Title</label>
+                    <div th:if="${#fields.hasErrors('title')}">
+                        <p class="text-danger m-1" th:each="error : ${#fields.errors('title')}" th:text="${error}"></p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control"
+                              th:classappend="${not #lists.isEmpty(#fields.errors('description'))} ? 'is-invalid'"
+                              type="text"
+                              id="description"
+                              th:value="${form.description}"
+                              placeholder="Please enter a description for this todo item..."
+                              th:field="*{description}"
+                              rows="8"
+                    >
+
+                    </textarea>
+                    <div th:if="${#fields.hasErrors('description')}">
+                        <p class="text-danger m-1" th:each="error : ${#fields.errors('description')}" th:text="${error}"></p>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input
+                            class="form-control"
+                            th:classappend="${not #lists.isEmpty(#fields.errors('deadLine'))} ? 'is-invalid'"
+                            type="date"
+                            id="deadLine"
+                            th:value="${form.deadLine}"
+                            placeholder="Please enter your first name"
+                            th:field="*{deadLine}"
+                    >
+                    <label for="deadLine">Deadline</label>
+                    <div th:if="${#fields.hasErrors('deadLine')}">
+                        <p class="text-danger m-1" th:each="error : ${#fields.errors('deadLine')}" th:text="${error}"></p>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 col-12 mx-auto">
+                    <input class="btn btn-primary" type="submit" value="Submit"> <br>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" > </script>
+</body>
+</html>
