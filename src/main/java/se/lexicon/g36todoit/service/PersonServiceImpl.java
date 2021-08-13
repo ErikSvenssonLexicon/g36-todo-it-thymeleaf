@@ -88,4 +88,10 @@ public class PersonServiceImpl implements PersonService {
         }
         return personDAO.save(person);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> findByNameContains(String search) {
+        return personDAO.findByNameContains(search);
+    }
 }

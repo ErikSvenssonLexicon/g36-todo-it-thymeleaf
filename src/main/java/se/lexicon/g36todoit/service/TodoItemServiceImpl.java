@@ -76,4 +76,22 @@ public class TodoItemServiceImpl implements TodoItemService{
         return !todoItemDAO.existsById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<TodoItem> findAvailableTodoItems() {
+        return todoItemDAO.findAvailableTodoItems();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TodoItem> findByDone(boolean done) {
+        return todoItemDAO.findByDone(done);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TodoItem> findAllExpiredAndIncompleteTodoItems() {
+        return todoItemDAO.findAllExpiredAndIncompleteTodoItems();
+    }
+
 }

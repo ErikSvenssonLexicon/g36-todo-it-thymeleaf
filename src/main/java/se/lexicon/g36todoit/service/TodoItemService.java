@@ -21,4 +21,11 @@ public interface TodoItemService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     boolean delete(Integer id);
+
+    List<TodoItem> findAvailableTodoItems();
+
+    List<TodoItem> findByDone(boolean done);
+
+    List<TodoItem> findAllExpiredAndIncompleteTodoItems();
+
 }

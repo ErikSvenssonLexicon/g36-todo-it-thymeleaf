@@ -27,4 +27,6 @@ public interface PersonService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     Person removeTodoItem(Integer personId, Integer todoItemId);
+
+    List<Person> findByNameContains(String search);
 }
