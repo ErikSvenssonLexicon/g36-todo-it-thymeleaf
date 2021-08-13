@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import se.lexicon.g36todoit.dao.PersonDAO;
 import se.lexicon.g36todoit.model.dto.PersonDTO;
 import se.lexicon.g36todoit.model.entity.Person;
+import se.lexicon.g36todoit.service.PersonService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -16,11 +17,10 @@ import java.util.ArrayList;
 @RequestMapping("/people")
 public class PersonController {
 
-    private final PersonDAO personDAO;
+    private final PersonService personService;
 
-    @Autowired
-    public PersonController(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @GetMapping("/create")
@@ -38,26 +38,20 @@ public class PersonController {
         if(bindingResult.hasErrors()){
             return "person-form";
         }
+        Person saved = personService.create(form);
 
-        Person person = new Person(
-                form.getFirstName().trim(),
-                form.getLastName().trim()
-        );
-
-        Person saved = personDAO.save(person);
         return "redirect:/people/"+saved.getId();
     }
 
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Integer id, Model model){
-        Person person = personDAO.findById(id).orElseThrow();
-        model.addAttribute("person", person);
+        model.addAttribute("person", personService.findById(id));
         return "person-view";
     }
 
     @GetMapping("/{id}/update")
     public String getUpdateForm(@PathVariable("id") Integer id, Model model){
-        Person person = personDAO.findById(id).orElseThrow();
+        Person person = personService.findById(id);
         PersonDTO personDTO = new PersonDTO();
         personDTO.setId(person.getId());
         personDTO.setFirstName(person.getFirstName());
@@ -73,14 +67,7 @@ public class PersonController {
         if(bindingResult.hasErrors()){
             return "person-form";
         }
-
-        Person toUpdate = personDAO.findById(id).orElseThrow();
-
-        toUpdate.setFirstName(form.getFirstName().trim());
-        toUpdate.setLastName(form.getLastName().trim());
-
-        personDAO.save(toUpdate);
-
+        personService.update(id, form);
         return "redirect:/people/"+id;
     }
 
