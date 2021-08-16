@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{css/style.css}" href="../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Todo IT</title>
+</head>
+<body class="my-image" style="height: 100%">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center flex-column">
+            
+            
+            <div class="jumbotron bg-transparent text-white mt-4 text-center">
+                <h1 class="display-1">Time todo IT</h1>
+                <hr class="my-4">
+                                    
+            </div>
+
+            <div class="row p-5 justify-content-center">
+                <a th:href="@{/people/create}" href="#" class="col-2 btn btn-success btn-lg active mr-5" >Click to enroll!</a>
+                <h3 class="col-2 align-self-center text-white mr-5 text-center"> OR </h3>
+                <a th:href="@{/public/login}" href="#" class=" col-2 btn btn-success btn-lg active" role="button">Log in here</a>
+            </div>
+            <div class="row" th:if="${param.logout}">
+                <div class="alert alert-success alert-dismissible">
+                    <button class="close" type="button" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <strong >You have been successfully logged out!</strong>
+                </div>
+            </div>
+                          
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" > </script>
+
+</body>
+</html>
