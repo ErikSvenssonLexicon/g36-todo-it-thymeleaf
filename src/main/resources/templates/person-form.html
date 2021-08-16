@@ -45,6 +45,55 @@
                             <p class="text-danger m-1" th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
                         </div>
                     </div>
+
+                    <div class="form-floating mb-3" th:unless="${form.id != null}">
+                        <input
+                                class="form-control"
+                                type="text"
+                                id="username"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('appUserForm.username'))} ? 'is-invalid'"
+                                th:value="${form.appUserForm.username}"
+                                placeholder="Please enter your last name"
+                                th:field="*{appUserForm.username}"
+                        >
+                        <label for="username">Username</label>
+                        <div th:if="${#fields.hasErrors('appUserForm.username')}">
+                            <p class="text-danger m-1" th:each="error : ${#fields.errors('appUserForm.username')}" th:text="${error}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3" th:unless="${form.id != null}">
+                        <input
+                                class="form-control"
+                                type="password"
+                                id="password"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('appUserForm.password'))} ? 'is-invalid'"
+                                th:value="${form.appUserForm.password}"
+                                placeholder="Please enter your last name"
+                                th:field="*{appUserForm.password}"
+                        >
+                        <label for="password">Password</label>
+                        <div th:if="${#fields.hasErrors('appUserForm.password')}">
+                            <p class="text-danger m-1" th:each="error : ${#fields.errors('appUserForm.password')}" th:text="${error}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3" th:unless="${form.id != null}">
+                        <input
+                                class="form-control"
+                                type="password"
+                                id="passwordConfirm"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('appUserForm.passwordConfirm'))} ? 'is-invalid'"
+                                th:value="${form.appUserForm.passwordConfirm}"
+                                placeholder="Please enter your last name"
+                                th:field="*{appUserForm.passwordConfirm}"
+                        >
+                        <label for="passwordConfirm">Confirm Password</label>
+                        <div th:if="${#fields.hasErrors('appUserForm.passwordConfirm')}">
+                            <p class="text-danger m-1" th:each="error : ${#fields.errors('appUserForm.passwordConfirm')}" th:text="${error}"></p>
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2 col-12 mx-auto">
                         <input class="btn btn-primary" type="submit" value="Submit"> <br>
                     </div>

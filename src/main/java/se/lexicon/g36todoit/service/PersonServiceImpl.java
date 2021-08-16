@@ -94,4 +94,10 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> findByNameContains(String search) {
         return personDAO.findByNameContains(search);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person findByUsername(String username) {
+        return personDAO.findByUserName(username).orElseThrow();
+    }
 }

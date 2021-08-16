@@ -29,4 +29,6 @@ public interface PersonService {
     Person removeTodoItem(Integer personId, Integer todoItemId);
 
     List<Person> findByNameContains(String search);
+
+    Person findByUsername(String username);
 }

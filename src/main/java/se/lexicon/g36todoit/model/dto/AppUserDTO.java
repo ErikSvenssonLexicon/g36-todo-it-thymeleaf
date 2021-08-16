@@ -1,12 +1,19 @@
 package se.lexicon.g36todoit.model.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class AppUserDTO implements Serializable {
 
     private Integer id;
+    @NotBlank(message = "This field is mandatory")
+    @Size(min = 4, max = 255, message = "Username need to have at least 2 letters")
     private String username;
+    @NotBlank(message = "This field is mandatory")
+    @Size(min = 8, max = 32, message = "Password need to have at least 8 letters")
     private String password;
+    @NotBlank(message = "This field is mandatory")
     private String passwordConfirm;
 
     public AppUserDTO() {
