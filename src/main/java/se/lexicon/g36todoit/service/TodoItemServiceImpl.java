@@ -2,10 +2,8 @@ package se.lexicon.g36todoit.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.lexicon.g36todoit.dao.PersonDAO;
 import se.lexicon.g36todoit.dao.TodoItemDAO;
 import se.lexicon.g36todoit.model.dto.TodoItemDTO;
-import se.lexicon.g36todoit.model.entity.Person;
 import se.lexicon.g36todoit.model.entity.TodoItem;
 
 import java.util.List;
@@ -14,11 +12,9 @@ import java.util.List;
 public class TodoItemServiceImpl implements TodoItemService{
 
     private final TodoItemDAO todoItemDAO;
-    private final PersonDAO personDAO;
 
-    public TodoItemServiceImpl(TodoItemDAO todoItemDAO, PersonDAO personDAO) {
+    public TodoItemServiceImpl(TodoItemDAO todoItemDAO) {
         this.todoItemDAO = todoItemDAO;
-        this.personDAO = personDAO;
     }
 
     @Override
@@ -29,12 +25,6 @@ public class TodoItemServiceImpl implements TodoItemService{
                 dto.getDescription(),
                 dto.getDeadLine()
         );
-
-        if(dto.getAssignee() != null && dto.getId() != null){
-            Person person = personDAO.findById(dto.getId()).orElseThrow();
-            todoItem.setAssignee(person);
-            person.getAssignedTodos().add(todoItem);
-        }
 
         return todoItemDAO.save(todoItem);
     }
