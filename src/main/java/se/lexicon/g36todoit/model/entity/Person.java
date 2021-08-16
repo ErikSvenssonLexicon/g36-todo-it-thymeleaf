@@ -17,6 +17,11 @@ public class Person {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(
+            name = "app_user_id", table = "person"
+    )
+    private AppUser userCredentials;
     @OneToMany(
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
             fetch = FetchType.LAZY,
