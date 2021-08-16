@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Todo Item Details</title>
 </head>
 <body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <h3 class="navbar-brand m-0" th:text="${todoItem.title} + ':'"></h3>
+                        </div>
+                        <div class="col">
+                            <div class="row justify-content-end">
+                                <div class="col-2">
+                                    <a class="btn btn-success" th:href="@{/todos/{id}/update (id = ${todoItem.id}) }" href="#" >Update</a>
+                                </div>
+                                <div class="col-2">
+                                    <form method="post">
+                                        <input type="hidden" th:value="${todoItem.id}" name="id" id="id">
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4>Details:</h4>
+                <div class="row  flex-column justify-content-center align-items-center">
+                    <div class="row  p-2">
+                        <div class="col-2 text-nowrap shadow-sm p-1">
+                            <span><strong>Title:</strong></span>
+                        </div>
+                        <div class="col-10 text-nowrap shadow-sm p-1">
+                            <span th:text="${todoItem.title}"></span>
+                        </div>
+                    </div>
+                    <div class="row  p-2">
+                        <div class="col-2 text-nowrap shadow-sm p-1">
+                            <span><strong>Deadline:</strong></span>
+                        </div>
+                        <div class="col-10 text-nowrap shadow-sm p-1">
+                            <span th:text="${todoItem.deadLine}"></span>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-2 text-nowrap shadow-sm p-1">
+                            <span><strong>Status:</strong></span>
+                        </div>
+                        <div class="col-10 text-nowrap shadow-sm p-1">
+                            <span th:text="${todoItem.done} ? 'COMPLETED' : 'UNFINISHED'"></span>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-2 text-nowrap shadow-sm p-1">
+                            <span><strong>Assigned to:</strong></span>
+                        </div>
+                        <div class="col-10 text-nowrap shadow-sm p-1">
+                            <span th:text="${todoItem.assignee} == null ? 'UNASSIGNED' : ${todoItem.assignee.firstName + ' ' + todoItem.assignee.lastName}"></span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="p2"><span><strong>Description:</strong></span></div>
+                <hr class="m-1">
+                <p th:utext="${todoItem.description}"></p>
+
+                <a class="btn btn-primary">To Search</a>
+            </div>
+        </div>
+
+    </div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" > </script>
 </body>
 </html>
