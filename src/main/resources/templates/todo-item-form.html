@@ -65,7 +65,12 @@
                     <input class="btn btn-primary" type="submit" value="Submit"> <br>
                 </div>
             </form>
-
+            <div th:if="${form.id != null}">
+                <a class="btn btn-danger" th:href="@{/todos/{id} (id = ${form.id})}">Cancel</a>
+            </div>
+            <div th:unless="${form.id != null}">
+                <a th:href="@{/todos}" href="#" class="btn btn-danger">Cancel</a>
+            </div>
         </div>
     </div>
 

@@ -72,7 +72,7 @@
                 <hr class="m-1">
                 <p th:utext="${todoItem.description}"></p>
 
-                <a class="btn btn-primary">To Search</a>
+                <a th:href="@{/todos(search='all')}" class="btn btn-primary">To Search</a>
             </div>
         </div>
 

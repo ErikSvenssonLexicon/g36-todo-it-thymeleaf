@@ -20,6 +20,12 @@ public class TodoItem {
     @Column(name = "done")
     private boolean done;
     @ManyToOne(
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "owner_id", table = "todo_item")
+    private Person owner;
+    @ManyToOne(
             cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.MERGE},
             fetch = FetchType.LAZY
     )
@@ -84,6 +90,14 @@ public class TodoItem {
 
     public void setAssignee(Person assignee) {
         this.assignee = assignee;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     @Override
