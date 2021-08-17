@@ -10,6 +10,15 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a th:href="@{/index}" class="navbar-brand">Todo IT</a>
+        <ul class="nav">
+            <li class="nav-item d-flex align-items-center">
+                <div class="me-3">
+                    <span class="navbar-text text-center">Logged in as Nisse</span>
+                </div>
+                <a class="btn btn-primary btn-success" href="#">Home</a>
+            </li>
+        </ul>
+
         <form class="d-flex" method="post">
             <input class="btn btn-success btn-lg" type="submit" value="Log Out" />
         </form>
