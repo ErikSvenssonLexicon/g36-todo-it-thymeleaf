@@ -84,35 +84,35 @@ public class PersonController {
         }
         Person saved = personService.create(form, AppUserRole.APP_USER);
 
-        return "redirect:/people/"+saved.getId();
+        return "redirect:/public/login";
     }
 
-    @GetMapping("/{id}")
-    public String findById(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("person", personService.findById(id));
+    @GetMapping("/{username}")
+    public String findById(@PathVariable("username") String username, Model model){
+        model.addAttribute("person", personService.findByUsername(username));
         return "person-view";
     }
 
-    @GetMapping("/{id}/update")
-    public String getUpdateForm(@PathVariable("id") Integer id, Model model){
-        Person person = personService.findById(id);
+    @GetMapping("/{username}/update")
+    public String getUpdateForm(@PathVariable("username") String username, Model model){
+        Person person = personService.findByUsername(username);
         PersonDTO personDTO = new PersonDTO();
         personDTO.setId(person.getId());
         personDTO.setFirstName(person.getFirstName());
         personDTO.setLastName(person.getLastName());
         model.addAttribute("form", personDTO);
-        model.addAttribute("actionUrl", "/people/"+id+"/update/process");
+        model.addAttribute("actionUrl", "/people/"+username+"/update/process");
         return "person-form";
     }
 
-    @PostMapping("/{id}/update/process")
-    public String processUpdate(@PathVariable("id") Integer id, @Valid @ModelAttribute("form") PersonDTO form, BindingResult bindingResult){
+    @PostMapping("/{username}/update/process")
+    public String processUpdate(@PathVariable("username") String username, @Valid @ModelAttribute("form") PersonDTO form, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return "person-form";
         }
-        personService.update(id, form);
-        return "redirect:/people/"+id;
+        personService.update(username, form);
+        return "redirect:/people/"+username;
     }
 
 }

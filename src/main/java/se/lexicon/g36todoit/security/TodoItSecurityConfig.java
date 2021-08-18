@@ -1,5 +1,6 @@
 package se.lexicon.g36todoit.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -8,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class TodoItSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AppUserAuthenticationSuccessHandler appUserAuthenticationSuccessHandler;
 
     /*
         Authenticated - Logged in.
@@ -29,6 +33,7 @@ public class TodoItSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .loginPage("/public/login")
+                    .successHandler(appUserAuthenticationSuccessHandler)
                     .permitAll()
                     .and()
                 .logout()

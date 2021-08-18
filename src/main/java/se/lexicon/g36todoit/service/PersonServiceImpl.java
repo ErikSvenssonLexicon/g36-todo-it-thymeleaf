@@ -52,8 +52,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public Person update(Integer id, PersonDTO dto){
-        Person original = findById(id);
+    public Person update(String username, PersonDTO dto){
+        Person original = personDAO.findByUserName(username).orElseThrow();
         original.setFirstName(dto.getFirstName().trim());
         original.setLastName(dto.getLastName().trim());
         return personDAO.save(original);

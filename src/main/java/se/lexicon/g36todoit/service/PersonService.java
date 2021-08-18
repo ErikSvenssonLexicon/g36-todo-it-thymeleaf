@@ -18,7 +18,7 @@ public interface PersonService {
     List<Person> findAll();
 
     @Transactional(rollbackFor = RuntimeException.class)
-    Person update(Integer id, PersonDTO dto);
+    Person update(String username, PersonDTO dto);
 
     @Transactional(rollbackFor = RuntimeException.class)
     boolean delete(Integer id);

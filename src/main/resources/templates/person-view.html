@@ -18,7 +18,7 @@
                 <div class="col">
                     <div class="row justify-content-end">
                         <div class="col-2">
-                            <a class="btn btn-success" th:href="@{/people/{id}/update (id = ${person.id}) }" href="#" >Update</a>
+                            <a class="btn btn-success" th:href="@{/people/{username}/update (username = ${person.userCredentials.username}) }" href="#" >Update</a>
                         </div>
                         <div class="col-2">
                             <form method="post">

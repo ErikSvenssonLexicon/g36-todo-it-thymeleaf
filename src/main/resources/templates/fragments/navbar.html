@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +13,13 @@
         <ul class="nav">
             <li class="nav-item d-flex align-items-center">
                 <div class="me-3">
-                    <span class="navbar-text text-center">Logged in as Nisse</span>
+                    <span class="navbar-text text-center" th:text="'Logged in as ' + ${#authorization.authentication.name}"></span>
                 </div>
                 <a class="btn btn-success" href="#">Home</a>
             </li>
         </ul>
 
-        <form class="d-flex" method="post">
+        <form sec:authorize="${isAuthenticated()}" th:action="@{/public/logout}" class="d-flex" method="post">
             <input class="btn btn-success btn-lg" type="submit" value="Log Out" />
         </form>
     </div>
