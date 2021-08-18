@@ -11,4 +11,9 @@ public class PublicController {
         return "index";
     }
 
+    @GetMapping("/public/login")
+    public String getLoginPage(){
+        return "login";
+    }
+
 }
