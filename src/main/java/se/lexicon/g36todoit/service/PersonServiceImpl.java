@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.g36todoit.dao.PersonDAO;
 import se.lexicon.g36todoit.dao.TodoItemDAO;
 import se.lexicon.g36todoit.model.dto.PersonDTO;
+import se.lexicon.g36todoit.model.entity.AppUser;
+import se.lexicon.g36todoit.model.entity.AppUserRole;
 import se.lexicon.g36todoit.model.entity.Person;
 import se.lexicon.g36todoit.model.entity.TodoItem;
 
@@ -15,19 +17,23 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonDAO personDAO;
     private final TodoItemDAO todoItemDAO;
+    private final AppUserService appUserService;
 
-    public PersonServiceImpl(PersonDAO personDAO, TodoItemDAO todoItemDAO) {
+    public PersonServiceImpl(PersonDAO personDAO, TodoItemDAO todoItemDAO, AppUserService appUserService) {
         this.personDAO = personDAO;
         this.todoItemDAO = todoItemDAO;
+        this.appUserService = appUserService;
     }
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public Person create(PersonDTO dto){
+    public Person create(PersonDTO dto, AppUserRole role){
+        AppUser userCredentials = appUserService.create(dto.getAppUserForm(), role);
         Person newPerson = new Person(
                 dto.getFirstName().trim(),
                 dto.getLastName().trim()
         );
+        newPerson.setUserCredentials(userCredentials);
         return personDAO.save(newPerson);
     }
 

@@ -13,6 +13,8 @@ public class TodoItSecurityConfig extends WebSecurityConfigurerAdapter {
         Authenticated - Logged in.
         Authorized - Authorities (rights to write, rights to read etc...)
 
+        When we are authenticated: we get a session with a state. State is called UserDetails
+
      */
 
     @Override

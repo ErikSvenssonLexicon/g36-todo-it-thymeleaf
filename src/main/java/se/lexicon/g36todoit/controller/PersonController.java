@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import se.lexicon.g36todoit.dao.AppUserDAO;
 import se.lexicon.g36todoit.model.dto.AppUserDTO;
 import se.lexicon.g36todoit.model.dto.PersonDTO;
+import se.lexicon.g36todoit.model.entity.AppUserRole;
 import se.lexicon.g36todoit.model.entity.Person;
 import se.lexicon.g36todoit.service.PersonService;
 
@@ -81,7 +82,7 @@ public class PersonController {
         if(bindingResult.hasErrors()){
             return "person-form";
         }
-        Person saved = personService.create(form);
+        Person saved = personService.create(form, AppUserRole.APP_USER);
 
         return "redirect:/people/"+saved.getId();
     }

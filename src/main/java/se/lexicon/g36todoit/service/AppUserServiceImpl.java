@@ -1,5 +1,6 @@
 package se.lexicon.g36todoit.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.g36todoit.dao.AppRoleDAO;
@@ -15,10 +16,12 @@ public class AppUserServiceImpl implements AppUserService{
 
     private final AppUserDAO appUserDAO;
     private final AppRoleDAO appRoleDAO;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AppUserServiceImpl(AppUserDAO appUserDAO, AppRoleDAO appRoleDAO) {
+    public AppUserServiceImpl(AppUserDAO appUserDAO, AppRoleDAO appRoleDAO, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.appUserDAO = appUserDAO;
         this.appRoleDAO = appRoleDAO;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser create(AppUserDTO appUserDTO, AppUserRole appUserRole){
         AppUser appUser = new AppUser(
                 appUserDTO.getUsername().trim(),
-                appUserDTO.getPassword().trim() //Will encrypt password once we implemented security
+                bCryptPasswordEncoder.encode(appUserDTO.getPassword().trim())
         );
 
         appUser.setRole(appRoleDAO.findByAppUserRole(appUserRole).orElseThrow());
@@ -58,7 +61,7 @@ public class AppUserServiceImpl implements AppUserService{
         AppUser appUser = findById(id);
 
         appUser.setUsername(appUserDTO.getUsername().trim());
-        appUser.setPassword(appUserDTO.getPassword().trim());
+        appUser.setPassword(bCryptPasswordEncoder.encode(appUserDTO.getPassword().trim()));
 
         return appUserDAO.save(appUser);
     }

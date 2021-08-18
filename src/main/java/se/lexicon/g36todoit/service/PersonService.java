@@ -2,13 +2,14 @@ package se.lexicon.g36todoit.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.g36todoit.model.dto.PersonDTO;
+import se.lexicon.g36todoit.model.entity.AppUserRole;
 import se.lexicon.g36todoit.model.entity.Person;
 
 import java.util.List;
 
 public interface PersonService {
     @Transactional(rollbackFor = RuntimeException.class)
-    Person create(PersonDTO dto);
+    Person create(PersonDTO dto, AppUserRole role);
 
     @Transactional(readOnly = true)
     Person findById(Integer id);

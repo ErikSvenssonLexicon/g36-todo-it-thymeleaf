@@ -72,6 +72,14 @@ public class Person {
         this.assignedTodos = assignedTodos;
     }
 
+    public AppUser getUserCredentials() {
+        return userCredentials;
+    }
+
+    public void setUserCredentials(AppUser userCredentials) {
+        this.userCredentials = userCredentials;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
