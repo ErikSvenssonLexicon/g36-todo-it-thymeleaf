@@ -10,4 +10,5 @@ public class PublicController {
     public String loadWelcome(){
         return "index";
     }
+
 }

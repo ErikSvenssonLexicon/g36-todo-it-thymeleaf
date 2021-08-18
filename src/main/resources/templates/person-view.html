@@ -51,7 +51,7 @@
                         <td class="align-middle"><span th:text="${todoItem.title}"></span></td>
                         <td class="align-middle"><span th:text="${todoItem.deadLine}"></span></td>
                         <td class="align-middle"><span th:text="${todoItem.done} ? 'COMPLETED' : 'UNFINISHED'"></span></td>
-                        <td class="align-middle"><a class="btn btn-sm btn-primary mr-1">Details</a></td>
+                        <td class="align-middle"><a th:href="@{/todos/{id} (id = ${todoItem.id}) }" class="btn btn-sm btn-primary mr-1">Details</a></td>
                         <td class="align-middle">
                             <form>
                                 <button type="submit" th:disabled="${todoItem.done}" class="btn btn-sm btn-success">Complete</button>
@@ -60,8 +60,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="row p-2">
-                <a href="#" class="btn btn-primary">Find a Job</a>
+
+            <div class="d-grid gap-2">
+                <a href="#" th:href="@{/todos(search='available')}" class="btn btn-primary">Find a Job</a>
+                <a href="#" class="btn btn-primary">Create Self-assigned Todo</a>
             </div>
         </div>
     </div>
