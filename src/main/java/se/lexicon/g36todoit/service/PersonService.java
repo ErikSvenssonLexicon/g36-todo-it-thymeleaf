@@ -24,10 +24,10 @@ public interface PersonService {
     boolean delete(Integer id);
 
     @Transactional(rollbackFor = RuntimeException.class)
-    Person assignTodoItem(Integer personId, Integer todoItemId);
+    Person assignTodoItem(String username, Integer todoItemId);
 
     @Transactional(rollbackFor = RuntimeException.class)
-    Person removeTodoItem(Integer personId, Integer todoItemId);
+    Person removeTodoItem(String username, Integer todoItemId);
 
     List<Person> findByNameContains(String search);
 

@@ -73,8 +73,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public Person assignTodoItem(Integer personId, Integer todoItemId){
-        Person person = findById(personId);
+    public Person assignTodoItem(String username, Integer todoItemId){
+        Person person = findByUsername(username);
         TodoItem todoItem = todoItemDAO.findById(todoItemId).orElseThrow();
         if(!person.getAssignedTodos().contains(todoItem)){
             person.getAssignedTodos().add(todoItem);
@@ -85,8 +85,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public Person removeTodoItem(Integer personId, Integer todoItemId){
-        Person person = findById(personId);
+    public Person removeTodoItem(String username, Integer todoItemId){
+        Person person = findByUsername(username);
         TodoItem todoItem = todoItemDAO.findById(todoItemId).orElseThrow();
         if(person.getAssignedTodos().contains(todoItem)){
             person.getAssignedTodos().remove(todoItem);

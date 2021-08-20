@@ -53,9 +53,10 @@
                         <td class="align-middle"><span th:text="${todoItem.done} ? 'COMPLETED' : 'UNFINISHED'"></span></td>
                         <td class="align-middle"><a th:href="@{/todos/{id} (id = ${todoItem.id}) }" class="btn btn-sm btn-primary mr-1">Details</a></td>
                         <td class="align-middle">
-                            <form>
-                                <button type="submit" th:disabled="${todoItem.done}" class="btn btn-sm btn-success">Complete</button>
-                            </form>
+
+                            <button th:if="${todoItem.done}" type="submit" disabled class="btn btn-sm btn-success">Complete</button>
+                            <a th:href="@{/todos/{id}/complete (id = ${todoItem.id})}" th:unless="${todoItem.done}" class="btn btn-sm btn-success">Complete</a>
+
                         </td>
                     </tr>
                 </tbody>
@@ -63,7 +64,7 @@
 
             <div class="d-grid gap-2">
                 <a href="#" th:href="@{/todos(search='available')}" class="btn btn-primary">Find a Job</a>
-                <a href="#" class="btn btn-primary">Create Self-assigned Todo</a>
+                <a href="#" th:href="@{/todos/create(username = ${#authorization.authentication.name}, self=true)}" class="btn btn-primary">Create Self-assigned Todo</a>
             </div>
         </div>
     </div>

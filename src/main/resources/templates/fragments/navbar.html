@@ -15,7 +15,7 @@
                 <div class="me-3">
                     <span class="navbar-text text-center" th:text="'Logged in as ' + ${#authorization.authentication.name}"></span>
                 </div>
-                <a class="btn btn-success" href="#">Home</a>
+                <a th:href="@{/people/{username}(username = ${#authorization.authentication.name})}" class="btn btn-success" href="#">Home</a>
             </li>
         </ul>
 

@@ -1,5 +1,6 @@
 package se.lexicon.g36todoit.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -88,12 +89,14 @@ public class PersonController {
     }
 
     @GetMapping("/{username}")
+    @PreAuthorize("#username == authentication.principal.username || hasRole('APP_ADMIN')")
     public String findById(@PathVariable("username") String username, Model model){
         model.addAttribute("person", personService.findByUsername(username));
         return "person-view";
     }
 
     @GetMapping("/{username}/update")
+    @PreAuthorize("#username == authentication.principal.username || hasRole('APP_ADMIN')")
     public String getUpdateForm(@PathVariable("username") String username, Model model){
         Person person = personService.findByUsername(username);
         PersonDTO personDTO = new PersonDTO();
@@ -106,6 +109,7 @@ public class PersonController {
     }
 
     @PostMapping("/{username}/update/process")
+    @PreAuthorize("#username == authentication.principal.username || hasRole('APP_ADMIN')")
     public String processUpdate(@PathVariable("username") String username, @Valid @ModelAttribute("form") PersonDTO form, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
@@ -113,6 +117,12 @@ public class PersonController {
         }
         personService.update(username, form);
         return "redirect:/people/"+username;
+    }
+
+    @GetMapping("/{username}/todoItems/assign")
+    public String assignTodo(@PathVariable("username") String username, @RequestParam(name = "todoId") Integer todoId){
+        personService.assignTodoItem(username, todoId);
+        return "redirect:/todos?search=available";
     }
 
 }

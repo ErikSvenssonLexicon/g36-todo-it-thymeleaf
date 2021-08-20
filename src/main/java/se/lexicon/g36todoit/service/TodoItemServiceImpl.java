@@ -2,8 +2,10 @@ package se.lexicon.g36todoit.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.lexicon.g36todoit.dao.PersonDAO;
 import se.lexicon.g36todoit.dao.TodoItemDAO;
 import se.lexicon.g36todoit.model.dto.TodoItemDTO;
+import se.lexicon.g36todoit.model.entity.Person;
 import se.lexicon.g36todoit.model.entity.TodoItem;
 
 import java.util.List;
@@ -12,19 +14,30 @@ import java.util.List;
 public class TodoItemServiceImpl implements TodoItemService{
 
     private final TodoItemDAO todoItemDAO;
+    private final PersonDAO personDAO;
 
-    public TodoItemServiceImpl(TodoItemDAO todoItemDAO) {
+    public TodoItemServiceImpl(TodoItemDAO todoItemDAO, PersonDAO personDAO) {
         this.todoItemDAO = todoItemDAO;
+        this.personDAO = personDAO;
     }
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public TodoItem create(TodoItemDTO dto){
+    public TodoItem create(String username, boolean selfAssigned, TodoItemDTO dto){
+        Person owner = personDAO.findByUserName(username).orElseThrow();
+
+
         TodoItem todoItem = new TodoItem(
                 dto.getTitle(),
                 dto.getDescription(),
                 dto.getDeadLine()
         );
+
+        todoItem.setOwner(owner);
+
+        if(selfAssigned){
+            todoItem.setAssignee(owner);
+        }
 
         return todoItemDAO.save(todoItem);
     }
@@ -64,6 +77,14 @@ public class TodoItemServiceImpl implements TodoItemService{
         todoItemDAO.delete(todoItem);
 
         return !todoItemDAO.existsById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public TodoItem complete(Integer id) {
+        TodoItem todoItem = findById(id);
+        todoItem.setDone(true);
+        return todoItemDAO.save(todoItem);
     }
 
     @Override

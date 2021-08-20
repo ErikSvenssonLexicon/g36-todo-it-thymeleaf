@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface TodoItemService {
     @Transactional(rollbackFor = RuntimeException.class)
-    TodoItem create(TodoItemDTO dto);
+    TodoItem create(String username, boolean selfAssign, TodoItemDTO dto);
+
 
     @Transactional(readOnly = true)
     TodoItem findById(Integer id);
@@ -21,6 +22,8 @@ public interface TodoItemService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     boolean delete(Integer id);
+
+    TodoItem complete(Integer id);
 
     List<TodoItem> findAvailableTodoItems();
 

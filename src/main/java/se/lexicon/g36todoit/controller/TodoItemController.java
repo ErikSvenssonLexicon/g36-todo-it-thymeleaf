@@ -56,19 +56,29 @@ public class TodoItemController {
     }
 
     @GetMapping("/create")
-    public String create(Model model){
+    public String create(@RequestParam(name = "username") String username, @RequestParam(name = "self") boolean selfAssigned, Model model){
         model.addAttribute("form", new TodoItemDTO());
-        model.addAttribute("actionUrl", "/todos/create/process");
+        if(selfAssigned){
+            model.addAttribute("actionUrl", "/todos/create/process?username="+username+"&selfAssigned=true");
+        }else{
+            model.addAttribute("actionUrl", "/todos/create/process?username="+username+"&selfAssigned=false");
+        }
+
         return "todo-item-form";
     }
 
     @PostMapping("/create/process")
-    public String process(@Valid @ModelAttribute(name = "form") TodoItemDTO form, BindingResult bindingResult){
+    public String process(
+            @Valid @ModelAttribute(name = "form") TodoItemDTO form,
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "selfAssigned") boolean selfAssigned,
+            BindingResult bindingResult){
+
         if(bindingResult.hasErrors()){
             return "todo-item-form";
         }
 
-        TodoItem newTodoItem = todoItemService.create(form);
+        TodoItem newTodoItem = todoItemService.create(username, selfAssigned, form);
 
         return "redirect:/todos/"+newTodoItem.getId();
     }
@@ -99,6 +109,12 @@ public class TodoItemController {
         }
         todoItemService.update(id, form);
 
+        return "redirect:/todos/"+id;
+    }
+
+    @GetMapping("/{id}/complete")
+    public String completeTodoItem(@PathVariable("id") Integer id){
+        todoItemService.complete(id);
         return "redirect:/todos/"+id;
     }
 

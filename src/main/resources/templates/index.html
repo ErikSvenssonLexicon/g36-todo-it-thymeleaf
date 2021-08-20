@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" style="height: 100%" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" th:href="@{css/style.css}" href="../static/css/style.css">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
@@ -20,10 +20,14 @@
                                     
             </div>
 
-            <div class="row p-5 justify-content-center">
+            <div sec:authorize="isAnonymous()" class="row p-5 justify-content-center">
                 <a th:href="@{/people/create}" href="#" class="col-2 btn btn-success btn-lg active mr-5" >Click to enroll!</a>
                 <h3 class="col-2 align-self-center text-white mr-5 text-center"> OR </h3>
-                <a th:href="@{/public/login}" href="#" class=" col-2 btn btn-success btn-lg active" role="button">Log in here</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/public/login}" href="#" class=" col-2 btn btn-success btn-lg active" role="button">Log in here</a>
+
+            </div>
+            <div sec:authorize="isAuthenticated()" class="row p-5 justify-content-center">
+                <a  th:href="@{/people/{username} (username = ${#authorization.authentication.name}) }" class="col-2 btn btn-primary btn-lg active" role="button">To home</a>
             </div>
             <div class="row" th:if="${param.logout}">
                 <div class="alert alert-success alert-dismissible">
